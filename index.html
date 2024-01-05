@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BMI Calculator</title>
+
+	<style>
+		body {
+			background-color: #0369a1;
+			font-family: 'Poppins', sans-serif;
+
+		}
+
+		.main {
+			background-color: #0ea5e9;
+			width: 400px;
+			margin: auto;
+			padding: 5px;
+			border-radius: 10px;
+			border-left: 4px solid #a5f3fc;
+			border-bottom: 4px solid #a5f3fc;
+			margin-top: 20px;
+			box-shadow: 0px 0px 10px 10px #075985;
+
+			animation: zoom-in-zoom-out 1s ease infinite;
+		}
+
+		#kg,
+		#cm {
+			width: 80%;
+			display: flex;
+			margin: auto;
+		}
+
+		h3,
+		h2 {
+			text-align: center;
+
+		}
+
+
+
+
+		.gombok {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: auto;
+
+
+			margin: 10px;
+
+		}
+
+		.calc,
+		.reset {
+			padding: 10px;
+			padding-left: 15px;
+			background-color: #0284c7;
+			border: none;
+			border-left: 3px solid #a5f3fc;
+			border-bottom: 3px solid #a5f3fc;
+			border-radius: 5px;
+			cursor: pointer;
+			font-weight: bold;
+			letter-spacing: 1.2px;
+			margin: 3px;
+			font-size: 15px;
+			transition: 0.1s;
+		}
+
+		.reset:hover {
+			font-size: 14px;
+		}
+
+		.calc:hover {
+			font-size: 14px;
+		}
+
+		#kg,
+		#cm {
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			border-left: 2px solid #a5f3fc;
+			border-bottom: 2px solid #a5f3fc;
+			background-color: rgba(0, 0, 0, 0.262);
+		}
+
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@keyframes zoom-in-zoom-out {
+			0% {
+				transform: scale(1, 1);
+			}
+
+			50% {
+				transform: scale(1.02, 1.02);
+			}
+
+			100% {
+				transform: scale(1, 1);
+			}
+		}
+
+			/*nyilak eltüntetése a input numberből
+			/* Chrome, Safari, Edge, Opera */
+			input[type=number]::-webkit-inner-spin-button,
+			input[type=number]::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				appearance: none;
+			}
+
+			/* Firefox */
+			input[type=number] {
+				-moz-appearance: textfield;
+			}
+
+			.result{
+				background-color: #0ea5e9;
+			width: 400px;
+			margin: auto;
+			padding: 5px;
+			border-radius: 10px;
+			border-left: 4px solid #a5f3fc;
+			border-bottom: 4px solid #a5f3fc;
+			margin-top: 20px;
+			box-shadow: 0px 0px 10px 10px #075985;
+
+			animation:  zoom-in-zoom-out 1s ease infinite;
+			}
+
+			.hidden{
+				display: none;
+			}
+
+			
+	</style>
+</head>
+
+<body>
+	<div class="main">
+		<h2>BMI Calculator</h2>
+		<h3>Weight(kg):</h3>
+		<input type="number" name="" id="kg">
+		<h3>Height(cm):</h3>
+		<input type="number" name="" id="cm">
+
+		<div class="gombok">
+			<button class="calc" onclick="Calc()">Calculate BMI</button>
+			<button class="reset" onclick="Reset()">Reset</button>
+		</div>
+	</div>
+
+	<div class="result hidden">
+			
+	</div>
+
+
+	<script>
+		const intervals = [
+			{ min: 0, max: 18.5, categ: 'Underweight', emoji: '😣' },
+			{ min: 18.5, max: 24.9, categ: 'Normal', emoji: '🙂' },
+			{ min: 25, max: 29.9, categ: 'Overweight', emoji: '😅' },
+			{ min: 30, max: 34.9, categ: 'Obese', emoji: '🤨' },
+			{ min: 35, max: 99999999, categ: 'Extremly Obese', emoji: '🙉' },
+		];
+		//let bmi = 34.7
+		//let interval = intervals.find(obj => bmi > obj.min && bmi < obj.max);
+		//console.log(interval, interval.emoji, interval.categ);
+		
+
+
+		function Calc(){
+
+			
+			try {
+				var kg=document.getElementById("kg").value;
+			var cm=document.getElementById("cm").value;
+			var bmi = (kg/(cm*cm)*10000);
+			console.log(kg,"-",cm," BMI: ",bmi);
+			
+			let interval = intervals.find(obj => bmi > obj.min && bmi < obj.max);
+			console.log(interval, interval.emoji, interval.categ);
+
+			document.querySelector(".result").classList.remove("hidden");
+
+			document.querySelector(".result").innerHTML=`
+			<h3>${interval.emoji}</h3>
+			<h3>${interval.categ}</h3>
+			<p style="font-size:13px;text-align:center">(${bmi.toFixed(5)})</p>
+			`
+				
+			} catch (error) {
+					alert("Hiba");
+			}
+			
+		}
+
+		function Reset(){
+			document.getElementById("kg").value="";
+			document.getElementById("cm").value="";
+			document.querySelector(".result").innerHTML="";
+			document.querySelector(".result").classList.add("hidden");
+			
+		}
+	</script>
+</body>
+
+</html>
